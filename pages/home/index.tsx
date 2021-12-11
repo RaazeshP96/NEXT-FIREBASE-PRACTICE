@@ -1,0 +1,27 @@
+import { Button, message } from "antd";
+import React from "react";
+import { getAuth, signOut } from "firebase/auth";
+import router from "next/router";
+import PrivateRoute from "../../withPrivateRoute";
+
+const auth = getAuth();
+
+const Home = () => {
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            message.success("Logged out succesfully");
+            router.push("/login");
+        } catch (error: any) {
+            message.error(error.message);
+        }
+    };
+    return (
+        <div>
+            This is home
+            <Button onClick={handleLogout}>Logout</Button>
+        </div>
+    );
+};
+
+export default PrivateRoute(Home);
