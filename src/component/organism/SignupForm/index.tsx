@@ -3,8 +3,9 @@ import React from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import router from "next/router";
 import Link from "next/link";
+import app from "../../../../firebase";
 
-const auth = getAuth();
+const auth = getAuth(app);
 const SignupForm: React.FC = () => {
     const handleSignup = async (email: string, password: string) => {
         try {

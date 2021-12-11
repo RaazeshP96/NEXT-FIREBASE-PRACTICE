@@ -3,8 +3,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import router from "next/router";
 import React from "react";
+import app from "../../../../firebase";
 
-const auth = getAuth();
+const auth = getAuth(app);
 const LoginForm: React.FC = () => {
     const handleLogin = async (email: string, password: string) => {
         try {

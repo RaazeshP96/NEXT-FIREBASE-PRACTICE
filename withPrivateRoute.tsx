@@ -2,7 +2,8 @@ import { Spin } from "antd";
 import { getAuth } from "firebase/auth";
 import router from "next/router";
 import React, { useEffect } from "react";
-const auth = getAuth();
+import app from "./firebase";
+const auth = getAuth(app);
 const user = auth.currentUser;
 const PrivateRoute = (AuthenticatedComponent: any) => {
     function PrivateComponent({ children }: any) {
