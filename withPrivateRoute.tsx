@@ -9,12 +9,14 @@ const PrivateRoute = (AuthenticatedComponent: any) => {
     function PrivateComponent({ children }: any) {
         useEffect(() => {
             const { pathname } = router;
-            if (user !== null && pathname == "/") {
-                router.push("/home");
+            if (user !== null) {
+                pathname === "/" || pathname === "/"
+                    ? router.push("/home")
+                    : router.push(pathname);
             } else {
                 router.push("/login");
             }
-        }, []);
+        }, [user]);
 
         if (user !== null) {
             return <>{children}</>;

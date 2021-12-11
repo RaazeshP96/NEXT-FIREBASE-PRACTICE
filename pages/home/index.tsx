@@ -3,8 +3,9 @@ import React from "react";
 import { getAuth, signOut } from "firebase/auth";
 import router from "next/router";
 import PrivateRoute from "../../withPrivateRoute";
+import app from "../../firebase";
 
-const auth = getAuth();
+const auth = getAuth(app);
 
 const Home = () => {
     const handleLogout = async () => {
