@@ -1,9 +1,22 @@
 import { Button, Form, Input, message, notification } from "antd";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import router from "next/router";
 import React from "react";
 import app from "../../../../services/firebase";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+    display: flex;
+    height: 100vh;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column;
+    & .ant-btn-primary {
+        width: 100%;
+    }
+`;
 
 const auth = getAuth(app);
 const LoginForm: React.FC = () => {
@@ -34,55 +47,64 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <>
+        <Wrapper>
             <Form
-                name="basic"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
+                name="normal_login"
+                className="login-form"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
             >
                 <Form.Item
-                    label="email"
                     name="email"
                     rules={[
                         {
                             required: true,
-                            message: "Please input your Email",
+                            message: "Please input your email!",
                         },
                         {
                             type: "email",
-                            message: "wrong email id",
+                            message: "Invalid email!!!",
                         },
                     ]}
                 >
-                    <Input />
+                    <Input
+                        prefix={
+                            <UserOutlined className="site-form-item-icon" />
+                        }
+                        placeholder="Email"
+                    />
                 </Form.Item>
-
                 <Form.Item
-                    label="Password"
                     name="password"
                     rules={[
                         {
                             required: true,
-                            message: "Please input your password!",
+                            message: "Please input your Password!",
                         },
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password
+                        prefix={
+                            <LockOutlined className="site-form-item-icon" />
+                        }
+                        type="password"
+                        placeholder="Password"
+                    />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        Log In
+                <Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                    >
+                        Log in
                     </Button>
                 </Form.Item>
             </Form>
             <Link href="/sign-up">
-                <a>Register user</a>
+                <a>Register now!</a>
             </Link>
-        </>
+        </Wrapper>
     );
 };
 
