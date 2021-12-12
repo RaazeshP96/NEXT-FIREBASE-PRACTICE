@@ -109,7 +109,7 @@ const SignupForm: React.FC = () => {
                 >
                     <Input.Password />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+                <Form.Item wrapperCol={{ span: 8 }}>
                     <Button type="primary" htmlType="submit">
                         Register
                     </Button>
