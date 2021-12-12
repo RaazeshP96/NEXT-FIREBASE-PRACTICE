@@ -1,27 +1,30 @@
 import { Spin } from "antd";
 import { getAuth } from "firebase/auth";
 import router from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import app from "./firebase";
 const auth = getAuth(app);
-const user = auth.currentUser;
 const PrivateRoute = (AuthenticatedComponent: any) => {
     function PrivateComponent({ children }: any) {
-        useEffect(() => {
-            const { pathname } = router;
-            if (user !== null) {
-                pathname === "/" || pathname === "/"
-                    ? router.push("/home")
-                    : router.push(pathname);
-            } else {
-                router.push("/login");
-            }
-        }, [user]);
+        const [authUser, setauthUser] = useState<boolean>(false);
 
-        if (user !== null) {
-            return <>{children}</>;
-        }
-        return <Spin></Spin>;
+        useEffect(() => {
+            auth.onAuthStateChanged(async (user) => {
+                const { pathname } = router;
+                await user;
+                setauthUser(user !== null);
+                if (user !== null) {
+                    pathname === "/" || pathname === "/home"
+                        ? router.push("/home")
+                        : router.push(pathname);
+                } else {
+                    auth.signOut();
+                    router.push("/login");
+                }
+            });
+        }, []);
+
+        return authUser ? <>{children}</> : <Spin></Spin>;
     }
     return class HOC extends React.Component {
         render() {
