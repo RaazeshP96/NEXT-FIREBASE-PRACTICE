@@ -51,7 +51,6 @@ const LoginForm: React.FC = () => {
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
-                wrapperCol={{ span: 8, offset: 8 }}
                 onFinish={onFinish}
             >
                 <Form.Item
