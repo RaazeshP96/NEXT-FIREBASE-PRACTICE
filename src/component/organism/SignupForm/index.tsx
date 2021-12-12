@@ -8,9 +8,12 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+    & .ant-form {
+        width: 50%;
+    }
 `;
 
 const auth = getAuth(app);
@@ -41,10 +44,8 @@ const SignupForm: React.FC = () => {
         <Wrapper>
             <Form
                 name="basic"
-                labelCol={{ span: 16 }}
-                wrapperCol={{ span: 80 }}
                 initialValues={{ remember: true }}
-                layout="horizontal"
+                layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
@@ -73,11 +74,40 @@ const SignupForm: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input.Password type="password" />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Form.Item
+                    name="confirm"
+                    label="Confirm Password"
+                    dependencies={["password"]}
+                    hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please confirm your password!",
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (
+                                    !value ||
+                                    getFieldValue("password") === value
+                                ) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(
+                                    new Error(
+                                        "The two passwords that you entered do not match!"
+                                    )
+                                );
+                            },
+                        }),
+                    ]}
+                >
+                    <Input.Password />
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
                     <Button type="primary" htmlType="submit">
-                        Sign Up
+                        Register
                     </Button>
                 </Form.Item>
             </Form>
