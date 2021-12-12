@@ -3,7 +3,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import router from "next/router";
 import React from "react";
-import app from "../../../../firebase";
+import app from "../../../../services/firebase";
 
 const auth = getAuth(app);
 const LoginForm: React.FC = () => {
