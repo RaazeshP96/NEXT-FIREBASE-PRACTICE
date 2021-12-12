@@ -30,7 +30,11 @@ const SignupForm: React.FC = () => {
                 router.push("/login");
             }
         } catch (err: any) {
-            notification.error(err.message);
+            if (err.code === "auth/email-already-in-use") {
+                message.error("This email is already registered !!!!");
+            } else {
+                message.error("something went wrong");
+            }
         }
     };
     const onFinish = ({ email, password }: any) => {

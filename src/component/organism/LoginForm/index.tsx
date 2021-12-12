@@ -33,8 +33,7 @@ const LoginForm: React.FC = () => {
                 router.push("/home");
             }
         } catch (error: any) {
-            console.log(error);
-            notification.error(error.message);
+            message.error("Something went wrong");
         }
     };
 
