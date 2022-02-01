@@ -1,13 +1,18 @@
 import { Button, message } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import router from "next/router";
 import PrivateRoute from "../../withPrivateRoute";
 import app from "../../services/firebase";
+import { MainContext } from "../../reducer";
+import { NextPage } from "next";
 
 const auth = getAuth(app);
 
-const Home = () => {
+const Home: NextPage = () => {
+    const { state } = useContext(MainContext);
+    const { email } = state;
+
     const handleLogout = async () => {
         try {
             await signOut(auth);
@@ -19,7 +24,7 @@ const Home = () => {
     };
     return (
         <div>
-            This is home
+            This is {email}
             <Button onClick={handleLogout}>Logout</Button>
         </div>
     );
