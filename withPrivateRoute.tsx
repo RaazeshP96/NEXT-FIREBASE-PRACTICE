@@ -1,8 +1,10 @@
 import { Spin } from "antd";
 import { getAuth } from "firebase/auth";
 import router from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { iType } from "./interfaces";
+import { MainContext } from "./reducer";
 import app from "./services/firebase";
 const auth = getAuth(app);
 
@@ -16,14 +18,18 @@ const Wrapper = styled.div`
 
 const PrivateRoute = (AuthenticatedComponent: any) => {
     function PrivateComponent({ children }: any) {
-        const [authUser, setauthUser] = useState<boolean>(false);
+        const { state, dispatch } = useContext(MainContext);
+        const { SET_EMAIL, SET_IS_AUTH, SET_USER } = iType;
+        const { isAuth } = state;
 
         useEffect(() => {
             auth.onAuthStateChanged(async (user) => {
                 const { pathname } = router;
                 await user;
-                setauthUser(user !== null);
+                dispatch({ type: SET_IS_AUTH, payload: user !== null });
+                dispatch({ type: SET_USER, payload: user });
                 if (user !== null) {
+                    dispatch({ type: SET_EMAIL, payload: user.email });
                     pathname === "/" || pathname === "/home"
                         ? router.push("/home")
                         : router.push(pathname);
@@ -34,7 +40,7 @@ const PrivateRoute = (AuthenticatedComponent: any) => {
             });
         }, []);
 
-        return authUser ? (
+        return isAuth ? (
             <>{children}</>
         ) : (
             <Wrapper>
