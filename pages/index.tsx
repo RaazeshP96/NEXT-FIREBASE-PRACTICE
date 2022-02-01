@@ -5,4 +5,4 @@ const index: NextPage = () => {
     return null;
 };
 
-export default PrivateRoute(index);
+export default index;
