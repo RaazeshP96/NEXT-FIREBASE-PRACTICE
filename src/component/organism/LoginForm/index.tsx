@@ -3,9 +3,10 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import router from "next/router";
-import React from "react";
+import React, { useContext } from "react";
 import app from "../../../../services/firebase";
 import styled from "styled-components";
+import { MainContext } from "../../../../reducer";
 
 const Wrapper = styled.div`
     display: flex;
@@ -20,6 +21,8 @@ const Wrapper = styled.div`
 
 const auth = getAuth(app);
 const LoginForm: React.FC = () => {
+    const { state } = useContext(MainContext);
+    const { email } = state;
     const handleLogin = async (email: string, password: string) => {
         try {
             const data = await signInWithEmailAndPassword(
@@ -103,6 +106,7 @@ const LoginForm: React.FC = () => {
             <Link href="/sign-up">
                 <a>Register now!</a>
             </Link>
+            <p>This is {email}</p>
         </Wrapper>
     );
 };
