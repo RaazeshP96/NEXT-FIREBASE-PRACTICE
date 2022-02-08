@@ -1,4 +1,4 @@
-import { Button, message } from "antd";
+import { message } from "antd";
 import React, { useContext } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import router from "next/router";
@@ -6,6 +6,163 @@ import PrivateRoute from "../../withPrivateRoute";
 import app from "../../services/firebase";
 import { MainContext } from "../../reducer";
 import { NextPage } from "next";
+import styled from "styled-components";
+
+const Navbar = styled.nav`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+    background: black;
+    background-blend-mode: darken;
+    background-size: cover;
+`;
+
+// const background {
+//     background: black;
+//     background-blend-mode: darken;
+//     background-size: cover;
+// }
+
+const NavList = styled.ul`
+    width: 70%;
+    display: flex;
+    align-items: center;
+    & > li {
+        list-style: none;
+        padding: 26px 30px;
+        & > a {
+            text-decoration: none;
+            color: white;
+            &:hover {
+                color: grey;
+            }
+        }
+    }
+`;
+
+const Logo = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > img {
+        width: 180px;
+        border-radius: 50px;
+    }
+`;
+const RightNav = styled.div`
+    width: 30%;
+    text-align: right;
+`;
+
+const SearchBar = styled.input`
+    padding: 5px;
+    font-size: 17px;
+    border: 2px solid grey;
+    border-radius: 9px;
+`;
+
+const FirstSection = styled.section`
+    background-color: green;
+    height: 400px;
+`;
+
+const SecondSection = styled.section`
+    background-color: blue;
+    height: 400px;
+`;
+
+const Main = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    max-width: 80%;
+    margin: auto;
+    height: 80%;
+`;
+
+const FirstHalf = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+const Secondhalf = styled.div`
+    width: 30%;
+    img {
+        width: 70%;
+        border: 4px solid white;
+        border-radius: 150px;
+        display: block;
+        margin: auto;
+    }
+`;
+
+const H1 = styled.h1`
+    font-family: "Piazzolla", serif;
+    font-weight: bold;
+    font-size: 35px;
+`;
+
+const SmallText = styled.p`
+    font-size: 18px;
+`;
+
+const Button = styled.button`
+    padding: 8px 20px;
+    margin: 7px 0;
+    border: 2px solid white;
+    border-radius: 8px;
+    background: none;
+    color: white;
+    cursor: pointer;
+`;
+
+const SmallButton = styled.button`
+    margin: 7px 0;
+    border: 2px solid white;
+    border-radius: 8px;
+    background: none;
+    color: white;
+    cursor: pointer;
+    padding: 6px 10px;
+    vertical-align: middle;
+`;
+
+const Section = styled.section`
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    margin: auto;
+`;
+
+const Paras = styled.div`
+    padding: 0px 65px;
+`;
+
+const ImageWrapper = styled.div`
+    img {
+        width: 250px;
+        border: 2px solid black;
+        border-radius: 26px;
+        margin-top: 19px;
+    }
+`;
+
+const Footer = styled.p`
+    text-align: center;
+    padding: 30px 0;
+    font-family: "Ubuntu", sans-serif;
+    display: flex;
+    justify-content: center;
+    color: white;
+`;
 
 const auth = getAuth(app);
 
@@ -30,11 +187,11 @@ const Home: NextPage = () => {
     // );
     return (
         <div>
-            <nav className="navbar background">
-                <ul className="nav-list">
-                    <div className="logo">
+            <Navbar>
+                <NavList>
+                    <Logo>
                         <img src="logo.png" />
-                    </div>
+                    </Logo>
                     <li>
                         <a href="#web">Web Technology</a>
                     </li>
@@ -44,22 +201,20 @@ const Home: NextPage = () => {
                     <li>
                         <a href="#course">Courses</a>
                     </li>
-                </ul>
+                </NavList>
 
-                <div className="rightNav">
-                    <input type="text" name="search" id="search" />
-                    <button className="btn btn-sm">Search</button>
-                </div>
-            </nav>
+                <RightNav>
+                    <SearchBar type="text" name="search" id="search" />
+                    <SmallButton>Search</SmallButton>
+                </RightNav>
+            </Navbar>
 
-            <section className="firstsection">
-                <div className="box-main">
-                    <div className="firstHalf">
-                        <h1 className="text-big" id="web">
-                            Web Technology
-                        </h1>
+            <FirstSection>
+                <Main>
+                    <FirstHalf>
+                        <H1 id="web">Web Technology</H1>
 
-                        <p className="text-small">
+                        <SmallText>
                             HTML stands for HyperText Markup Language. It is
                             used to design web pages using a markup language.
                             HTML is the combination of Hypertext and Markup
@@ -69,18 +224,16 @@ const Home: NextPage = () => {
                             web pages. HTML is a markup language that is used by
                             the browser to manipulate text, images, and other
                             content to display it in the required format.
-                        </p>
-                    </div>
-                </div>
-            </section>
+                        </SmallText>
+                    </FirstHalf>
+                </Main>
+            </FirstSection>
 
-            <section className="secondsection">
-                <div className="box-main">
-                    <div className="secondHalf">
-                        <h1 className="text-big" id="program">
-                            C Programming
-                        </h1>
-                        <p className="text-small">
+            <SecondSection>
+                <Main>
+                    <Secondhalf>
+                        <H1 id="program">C Programming</H1>
+                        <SmallText>
                             C is a procedural programming language. It was
                             initially developed by Dennis Ritchie as a system
                             programming language to write operating system. The
@@ -89,16 +242,15 @@ const Home: NextPage = () => {
                             these features make C language suitable for system
                             programming like operating system or compiler
                             development.
-                        </p>
-                    </div>
-                </div>
-            </section>
+                        </SmallText>
+                    </Secondhalf>
+                </Main>
+            </SecondSection>
 
-            <section className="section">
-                <div className="paras">
-                    <h1 className="sectionTag text-big">Java</h1>
-
-                    <p className="sectionSubTag text-small">
+            <Section>
+                <Paras>
+                    <H1>Java</H1>
+                    <SmallText>
                         Java has been one of the most popular programming
                         language for many years. Java is Object Oriented.
                         However it is not considered as pure object oriented as
@@ -107,10 +259,10 @@ const Home: NextPage = () => {
                         code (machine independent code). Then the byte code is
                         run on Java Virtual Machine (JVM) regardless of the
                         underlying architecture.
-                    </p>
-                </div>
+                    </SmallText>
+                </Paras>
 
-                <div className="thumbnail">
+                <ImageWrapper>
                     <img
                         id="zoom-image"
                         role="img"
@@ -119,13 +271,11 @@ const Home: NextPage = () => {
                         title="Laptop computer with blue pink lighting and blank screen place on dark background. 3D illustration image. Laptop computer with blue pink lighting and blank screen place on dark background. 3D illustration image. Laptop Stock Photo"
                         className="ZoomImageCard-module__zoom__image___FG7Eq"
                     />
-                </div>
-            </section>
+                </ImageWrapper>
+            </Section>
 
             <footer className="background">
-                <p className="text-footer">
-                    Copyright ©-All rights are reserved
-                </p>
+                <Footer>Copyright ©-All rights are reserved</Footer>
             </footer>
         </div>
     );
